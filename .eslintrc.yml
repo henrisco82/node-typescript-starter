@@ -1,0 +1,40 @@
+env:
+  browser: true
+  commonjs: true
+  es2021: true
+  node: true
+extends: [
+  'standard-with-typescript', 
+  'airbnb', 
+  'airbnb-typescript', 
+  'prettier',
+  'plugin:node/recommended',
+  'plugin:@typescript-eslint/recommended',
+  ]
+plugins:
+  - 'prettier'
+  - 'node'
+  - '@typescript-eslint'
+overrides: []
+parserOptions: 
+  project: './tsconfig.json'
+  ecmaVersion: latest
+settings:
+    node: 
+      tryExtensions: ['.js', '.ts', '.json', '.node']
+rules: {
+  'prettier/prettier': 'error',
+  'no-unused-vars': 'warn',
+  'func-names': 'off',
+  'no-console': 'off',
+  'no-underscore-dangle': 'off',
+  '@typescript-eslint/ban-types': 'off',
+  '@typescript-eslint/no-floating-promises': 'off',
+  'import/no-extraneous-dependencies': 'off',
+  'node/no-unsupported-features/es-syntax': [
+    'error',
+    {
+      ignores: ['modules']
+    }
+  ],  
+}
