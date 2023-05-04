@@ -21,3 +21,5 @@ app.use(errorHandler);
 app.listen(9000, () => {
   console.log('Server started on port 9000');
 });
+
+export default app;
