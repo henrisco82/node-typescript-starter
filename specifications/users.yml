@@ -1,0 +1,210 @@
+paths:
+  /users:
+    get:
+      tags:
+        - users
+      summary: List users
+      description: List all users
+      operationId: listUsers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errUnauthorized'
+    post:
+      tags:
+        - users
+      summary: Register user
+      description: Register user
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errBadRequest'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errConflict'
+  /users/{id}:
+    put:
+      tags:
+        - users
+      summary: Update user
+      description: Update user
+      operationId: updateUser
+      paramters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 60f1b0b3b9b0f3a8c8b0a0a0
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errBadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errUnauthorized'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errNotFound'
+    delete:
+      tags:
+        - users
+      summary: Delete user
+      description: Delete user
+      operationId: deleteUser
+      paramters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 60f1b0b3b9b0f3a8c8b0a0a0
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errUnauthorized'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errNotFound'
+components:
+  schemas:
+    errInternalServer:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Internal Server Error
+        code:
+          type: string
+          example: ERR_INTERNAL_SERVER
+    errUnauthorized:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Unauthorized
+        code:
+          type: string
+          example: ERR_UNAUTHORIZED
+    errNotFound:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Not Found
+        code:
+          type: string
+          example: ERR_NOT_FOUND
+    errBadRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Bad Request
+        code:
+          type: string
+          example: ERR_BAD_REQUEST
+    errForbidden:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Forbidden
+        code:
+          type: string
+          example: ERR_FORBIDDEN
+    errConflict:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Conflict
+        code:
+          type: string
+          example: ERR_CONFLICT
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: abc@gmail.com
+        password:
+          type: string
+          example: 123456
+        isAdmin:
+          type: boolean
+          example: false

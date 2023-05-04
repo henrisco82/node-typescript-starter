@@ -1,0 +1,75 @@
+paths:
+  /products:
+    get:
+      tags:
+        - products
+      summary: List products
+      description: List all products
+      operationId: listProducts
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errUnauthorized'
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        image:
+          type: string
+        brand:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        countInStock:
+          type: number
+        rating:
+          type: number
+        numReviews:
+          type: number
+      required:
+        - name
+        - price
+    errUnauthorized:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    errBadRequest:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    errConflict:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
