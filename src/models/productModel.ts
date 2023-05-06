@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 export interface ProductDocument extends Document {
+  _id: string;
   name: string;
   image: string;
   brand: string;

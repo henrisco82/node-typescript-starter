@@ -42,4 +42,39 @@ async function createUser(
   return user;
 }
 
-export { findAllUsers, findUser, findUserById, authenticateUser, createUser };
+async function deleteUserById(id: string): Promise<UserDocument | null> {
+  const user = await User.findByIdAndDelete(id);
+  if (user == null) return null;
+  return user;
+}
+
+async function update(
+  id: string,
+  name: string,
+  email: string,
+  password?: string,
+  isAdmin?: boolean,
+): Promise<UserDocument | null> {
+  const user = await User.findByIdAndUpdate(
+    id,
+    {
+      name,
+      email,
+      password,
+      isAdmin,
+    },
+    { new: true },
+  );
+  if (user == null) return null;
+  return user;
+}
+
+export {
+  findAllUsers,
+  findUser,
+  findUserById,
+  authenticateUser,
+  createUser,
+  deleteUserById,
+  update,
+};

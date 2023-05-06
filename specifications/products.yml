@@ -1,11 +1,192 @@
 paths:
   /products:
+    create:
+      tags:
+        - products
+      summary: Create product
+      description: Create product
+      operationId: createProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/Product'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errUnauthorized'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errBadRequest'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errConflict'
     get:
       tags:
         - products
       summary: List products
       description: List all products
       operationId: listProducts
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errUnauthorized'
+  /products/{id}:
+    get:
+      tags:
+        - products
+      summary: Get product by id
+      description: Get product by id
+      operationId: getProductById
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Product id
+          required: true
+          schema:
+            type: string
+            format: _id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errUnauthorized'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errNotFound'
+    delete:
+      tags:
+        - products
+      summary: Delete product
+      description: Delete product
+      operationId: deleteProduct
+      paramters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 60f1b0b3b9b0f3a8c8b0a0a0
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errUnauthorized'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errNotFound'
+    put:
+      tags:
+        - products
+      summary: Update product
+      description: Update product
+      operationId: updateProduct
+      paramters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 60f1b0b3b9b0f3a8c8b0a0a0
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errUnauthorized'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errBadRequest'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errNotFound'
+  /products/top:
+    get:
+      tags:
+        - products
+      summary: Get top products
+      description: Get top products
+      operationId: getTopProducts
       security:
         - bearerAuth: []
       responses:
