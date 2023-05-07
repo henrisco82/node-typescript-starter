@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { type Request, type Response } from 'express';
-import Product from '../models/productModel';
+import Product, { type Review } from '../models/productModel';
 import { type UserDocument } from '../models/userModel';
 import {
   findAll,
@@ -9,7 +9,7 @@ import {
   deleteById,
   update,
   create,
-} from '../services/product.service';
+} from '../services/productService';
 
 interface CustomRequest extends Request {
   user?: UserDocument | null;
@@ -100,6 +100,51 @@ const updateProduct = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
+// @desc    Create new review
+// @route   POST /api/products/:id/reviews
+// @access  Private
+const createProductReview = asyncHandler(
+  async (req: CustomRequest, res: Response) => {
+    const { rating, comment } = req.body;
+    const { user } = req;
+    if (user === undefined || user === null) throw new Error('User not found');
+
+    const product = await Product.findById(req.params.id);
+
+    if (product != null) {
+      const alreadyReviewed = product.reviews.find(
+        (r) => r.user === user?._id.toString(),
+      );
+
+      if (alreadyReviewed != null) {
+        res.status(400);
+        throw new Error('Product already reviewed');
+      }
+
+      const review: Review = {
+        name: user?.name,
+        rating: Number(rating),
+        comment,
+        user: user?._id,
+      };
+
+      product.reviews.push(review);
+
+      product.numReviews = product.reviews.length;
+
+      product.rating =
+        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+        product.reviews.length;
+
+      await product.save();
+      res.status(201).json({ message: 'Review added' });
+    } else {
+      res.status(404);
+      throw new Error('Product not found');
+    }
+  },
+);
+
 // @desc    Get top rated products
 // @route   GET /api/products/top
 // @access  Public
@@ -116,4 +161,5 @@ export {
   createProduct,
   updateProduct,
   getTopProducts,
+  createProductReview,
 };

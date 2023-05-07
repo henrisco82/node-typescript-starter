@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 import { type NextFunction, type Request, type Response } from 'express';
 import { type UserDocument } from '../models/userModel';
-import { findUserById } from '../services/user.service';
+import { findUserById } from '../services/userService';
 
 interface CustomRequest extends Request {
   user?: UserDocument | null;

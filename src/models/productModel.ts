@@ -1,5 +1,12 @@
 import { Schema, model } from 'mongoose';
 
+export interface Review {
+  name: string | undefined;
+  rating: number;
+  comment: string;
+  user: string | undefined;
+}
+
 export interface ProductDocument extends Document {
   _id: string;
   name: string;
@@ -11,6 +18,7 @@ export interface ProductDocument extends Document {
   countInStock: number;
   rating: number;
   numReviews: number;
+  reviews: Review[];
 }
 
 const reviewSchema: Schema = new Schema(

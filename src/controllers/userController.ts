@@ -9,7 +9,7 @@ import {
   createUser,
   deleteUserById,
   update,
-} from '../services/user.service';
+} from '../services/userService';
 import { type UserDocument } from '../models/userModel';
 
 interface CustomRequest extends Request {

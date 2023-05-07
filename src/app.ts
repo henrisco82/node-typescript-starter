@@ -5,6 +5,7 @@ import swaggerUi from 'swagger-ui-express';
 import connectToDatabase from './config/database';
 import userRoutes from './routes/userRoutes';
 import productRoutes from './routes/productRoutes';
+import orderRoutes from './routes/orderRoutes';
 import { notFound, errorHandler } from './middleware/errorMiddleware';
 
 dotenv.config();
@@ -36,6 +37,10 @@ const options = {
         url: 'http://localhost:9000/api/',
         description: 'Development server',
       },
+      {
+        url: 'https://node-api-jlj0.onrender.com/api/',
+        description: 'Production server',
+      },
     ],
   },
   apis: ['./specifications/*.yml'],
@@ -56,6 +61,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, uiOptions));
 
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');
