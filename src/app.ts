@@ -1,4 +1,5 @@
 import express, { type Application } from 'express';
+import path from 'path';
 import dotenv from 'dotenv';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
@@ -62,6 +63,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, uiOptions));
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
+
+const dirname = path.resolve();
+app.use('/uploads', express.static(path.join(dirname, '/uploads')));
 
 app.get('/', (req, res) => {
   res.send('API is running...');

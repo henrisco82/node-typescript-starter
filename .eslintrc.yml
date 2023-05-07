@@ -30,6 +30,7 @@ rules: {
   'no-underscore-dangle': 'off',
   '@typescript-eslint/ban-types': 'off',
   '@typescript-eslint/no-floating-promises': 'off',
+  '@typescript-eslint/restrict-template-expressions': 'off',
   'import/no-extraneous-dependencies': 'off',
   'node/no-unsupported-features/es-syntax': [
     'error',
