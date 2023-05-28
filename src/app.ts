@@ -3,6 +3,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 import connectToDatabase from './config/database';
 import userRoutes from './routes/userRoutes';
 import productRoutes from './routes/productRoutes';
@@ -14,6 +15,17 @@ dotenv.config();
 connectToDatabase();
 
 const app: Application = express();
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://node-api-jlj0.onrender.com',
+];
+
+const corsOptions: cors.CorsOptions = {
+  origin: allowedOrigins,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const options = {
@@ -69,6 +81,10 @@ app.use('/uploads', express.static(path.join(dirname, '/uploads')));
 
 app.get('/', (req, res) => {
   res.send('API is running...');
+});
+
+app.get('/api/config/paypal', (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID);
 });
 
 app.use(notFound);
