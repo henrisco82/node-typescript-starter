@@ -19,6 +19,7 @@ const app: Application = express();
 const allowedOrigins = [
   'http://localhost:3000',
   'https://node-api-jlj0.onrender.com',
+  'https://henry-proshop.onrender.com',
 ];
 
 const corsOptions: cors.CorsOptions = {
