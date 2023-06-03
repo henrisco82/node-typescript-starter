@@ -9,6 +9,7 @@ import {
   createUser,
   deleteUserById,
   update,
+  updateProfile,
 } from '../services/userService';
 import { type UserDocument } from '../models/userModel';
 
@@ -94,7 +95,7 @@ const updateUserProfile = asyncHandler(
     const { user } = req;
     const { name, email, password } = req.body;
     if (user === undefined || user === null) throw new Error('User not found');
-    const updatedUser = await update(user?._id, name, email, password);
+    const updatedUser = await updateProfile(user._id, name, email, password);
     if (updatedUser === null) {
       res.status(404);
       throw new Error('User not found');

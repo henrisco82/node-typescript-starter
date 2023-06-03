@@ -67,6 +67,26 @@ async function update(
   return user;
 }
 
+async function updateProfile(
+  id: string,
+  name: string,
+  email: string,
+  password: string,
+): Promise<UserDocument | null> {
+  const user = await User.findById(id);
+  if (user != null) {
+    user.name = name;
+    user.email = email;
+    if (password !== '') {
+      user.password = password;
+    }
+    await user.save();
+  }
+
+  if (user == null) return null;
+  return user;
+}
+
 export {
   findAllUsers,
   findUser,
@@ -75,4 +95,5 @@ export {
   createUser,
   deleteUserById,
   update,
+  updateProfile,
 };
