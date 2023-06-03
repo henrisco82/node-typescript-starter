@@ -67,7 +67,10 @@ const getOrderById = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/:id/pay
 // @access  Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id);
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email',
+  );
 
   if (order != null) {
     order.isPaid = true;
@@ -92,7 +95,10 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/:id/deliver
 // @access  Private/Admin
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id);
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email',
+  );
 
   if (order != null) {
     order.isDelivered = true;
@@ -122,7 +128,7 @@ const getMyOrders = asyncHandler(async (req: CustomRequest, res: Response) => {
 // @route   GET /api/orders
 // @access  Private/Admin
 const getOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({});
+  const orders = await Order.find({}).populate('user', 'id name');
   res.json(orders);
 });
 
