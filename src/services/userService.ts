@@ -52,7 +52,6 @@ async function update(
   id: string,
   name: string,
   email: string,
-  password?: string,
   isAdmin?: boolean,
 ): Promise<UserDocument | null> {
   const user = await User.findByIdAndUpdate(
@@ -60,7 +59,6 @@ async function update(
     {
       name,
       email,
-      password,
       isAdmin,
     },
     { new: true },
