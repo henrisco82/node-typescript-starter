@@ -91,7 +91,6 @@ const updateProduct = asyncHandler(async (req: Request, res: Response) => {
     product.brand = brand;
     product.category = category;
     product.countInStock = countInStock;
-
     const updatedProduct = await update(product);
     res.json(updatedProduct);
   } else {

@@ -39,7 +39,7 @@ const reviewSchema: Schema = new Schema(
 
 const productSchema: Schema = new Schema(
   {
-    user: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+    user: { type: Schema.Types.ObjectId, required: false, ref: 'User' },
     name: { type: String, required: true },
     image: { type: String, required: true },
     brand: { type: String, required: true },

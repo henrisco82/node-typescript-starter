@@ -38,9 +38,10 @@ export const checkFileType = (
   const mimetype = filetypes.test(file.mimetype);
 
   if (extname && mimetype) {
-    return cb(null, true);
+    cb(null, true);
+    return;
   }
-  return cb(null, false);
+  cb(null, false);
 };
 
 const upload = multer({

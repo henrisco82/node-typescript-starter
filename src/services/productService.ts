@@ -25,8 +25,19 @@ async function deleteById(id: string): Promise<ProductDocument | null> {
 async function update(
   productData: ProductDocument,
 ): Promise<ProductDocument | null> {
-  const product = await Product.findByIdAndUpdate(productData._id, productData);
-  if (product == null) return null;
+  const product = await Product.findById(productData._id);
+  if (product != null) {
+    product.name = productData.name;
+    product.price = productData.price;
+    product.description = productData.description;
+    product.image = productData.image;
+    product.brand = productData.brand;
+    product.category = productData.category;
+    product.countInStock = productData.countInStock;
+    product.rating = productData.rating;
+    product.numReviews = productData.numReviews;
+    await product.save();
+  }
   return product;
 }
 
